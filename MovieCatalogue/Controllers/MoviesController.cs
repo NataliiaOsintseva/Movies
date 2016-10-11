@@ -24,7 +24,7 @@ namespace MovieCatalogue.Controllers
                            select g.Genre;
 
             GenreList.AddRange(GenreQuery.Distinct());
-            ViewBag.movieGenre = new SelectList(GenreList);
+            ViewBag.genre = new SelectList(GenreList);
 
             var movies = from m in db.Movies select m;
 
@@ -33,12 +33,12 @@ namespace MovieCatalogue.Controllers
                 movies = movies.Where(q => q.Title.Contains(searchMovie));
             }
 
-            if (!String.IsNullOrEmpty(genre))
+            if (!String.IsNullOrEmpty(genre) && genre != "All")
             {
                 movies = movies.Where(x => x.Genre.Equals(genre));
             }
 
-            return View(db.Movies.ToList());
+            return View(movies);
         }
 
         // GET: Movies/Details/5
